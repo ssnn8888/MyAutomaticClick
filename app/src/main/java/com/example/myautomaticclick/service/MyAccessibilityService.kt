@@ -1,27 +1,16 @@
 package com.example.myautomaticclick.service
 
 import android.accessibilityservice.AccessibilityService
-import android.accessibilityservice.AccessibilityServiceInfo
-import android.app.Service
-import android.content.Intent
-import android.os.IBinder
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
-import android.app.ActivityManager
-import android.content.Context
-import android.content.pm.PackageManager
-import android.graphics.Path
-import android.os.Build
-import android.os.Handler
 import android.view.accessibility.AccessibilityNodeInfo
-import androidx.annotation.RequiresApi
 import com.example.myautomaticclick.util.sleep
 import com.example.myautomaticclick.util.startDuokan
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 
-class MyAccessibilityService() :
+class MyAccessibilityService :
     AccessibilityService(), CoroutineScope {
     private lateinit var job: Job
 
