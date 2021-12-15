@@ -12,6 +12,7 @@ import android.content.Context
 import android.provider.Settings
 import android.text.TextUtils.SimpleStringSplitter
 import android.util.Log
+import com.example.myautomaticclick.util.startDuokan
 
 
 class MainActivity : AppCompatActivity() {
