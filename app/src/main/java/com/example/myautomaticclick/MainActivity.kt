@@ -13,6 +13,7 @@ import android.provider.Settings
 import android.text.TextUtils.SimpleStringSplitter
 import android.util.Log
 import com.example.myautomaticclick.util.startDuokan
+import com.example.myautomaticclick.util.staticContext
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         findViewById<TextView>(R.id.tv_star).setOnClickListener {
             if (isAccessibilitySettingsOn(this,MyAccessibilityService::class.java)){
+                staticContext = this
                 startService(Intent(this,MyAccessibilityService::class.java))
             }else{
                 startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))

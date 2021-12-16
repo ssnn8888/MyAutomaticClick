@@ -16,7 +16,9 @@ import com.example.myautomaticclick.util.startDuokan
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 import android.os.Parcelable
+import android.view.KeyEvent
 import com.example.myautomaticclick.MainActivity2
+import com.example.myautomaticclick.util.staticContext
 
 
 class MyAccessibilityService : AccessibilityService(), CoroutineScope {
@@ -30,23 +32,6 @@ class MyAccessibilityService : AccessibilityService(), CoroutineScope {
         Log.i("zhuwei", "AccessibilityEvent$event")
         val window = rootInActiveWindow
         Log.i("zhuwei", "window$window")
-//        if (event?.eventType === AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED) {
-//            //获取事件具体信息
-//            val parcelable = event.parcelableData
-//            //如果是下拉通知栏消息
-//            if (parcelable is Notification) {
-//            } else {
-//                //其它通知信息，包括Toast
-//                val toastMsg = event!!.text[0] as String
-//                Log.i("zhuwei", "onAccessibilityEvent: $toastMsg")
-//                if (toastMsg.contains("尽快")) {
-//                    startActivity(Intent(this, MainActivity2::class.java).apply {
-//                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                    })
-//                    return
-//                }
-//            }
-//        }
         val titleNode =
             rootInActiveWindow?.findAccessibilityNodeInfosByViewId("com.duokan.reader:id/general__header_view__center_title")
         if (titleNode != null && titleNode.size > 0 && titleNode[0].text == "签到福利") {
@@ -54,31 +39,12 @@ class MyAccessibilityService : AccessibilityService(), CoroutineScope {
             click(Point(940, 650))
             sleep(1000)
             click(Point(940, 650))
-
+            var i = 0
             Handler().postDelayed({
-                startActivity(Intent(this, MainActivity2::class.java).apply {
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    })
-            }, 35000)
+                Log.i("zhuwei", "handlerSuc")
+                openDuokan()
+            }, 35*1000)
 
-//            val receivedNode = rootInActiveWindow.findAccessibilityNodeInfosByText("已领取")
-//            val acceptNode = rootInActiveWindow.findAccessibilityNodeInfosByText("收下")
-//            Log.i("zhuwei", "receivedNode:${receivedNode}\nacceptNode${acceptNode}")
-//            // launch {
-//            if (receivedNode != null) {
-//                Log.i("zhuwei", "receivedNode")
-//                sleep(1000)
-//                //clickNode(receivedNode)
-//                click(Point(940,650))
-//                sleep(35000)
-//                startDuokan(this@MyAccessibilityService)
-//            }
-//            if (acceptNode != null) {
-//                Log.i("zhuwei", "acceptNode")
-//                sleep(1000)
-//                clickNode(acceptNode)
-//            }
-//            //  }
         }
 
     }
@@ -132,10 +98,12 @@ class MyAccessibilityService : AccessibilityService(), CoroutineScope {
     override fun onCreate() {
         super.onCreate()
         Log.i("zhuwei", "onCreate")
+
         job = Job()
-        startActivity(Intent(this, MainActivity2::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        })
+        //staticContext?.let { startDuokan(it) }
+//        staticContext?.startActivity(Intent(staticContext, MainActivity2::class.java).apply {
+//            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//        })
     }
 
     override fun onDestroy() {
@@ -144,14 +112,9 @@ class MyAccessibilityService : AccessibilityService(), CoroutineScope {
         super.onDestroy()
     }
 
-//    override fun onServiceConnected() {
-//        val serviceInfo = AccessibilityServiceInfo().apply {
-//            eventTypes = AccessibilityEvent.TYPES_ALL_MASK
-//            feedbackType  = AccessibilityServiceInfo.FEEDBACK_ALL_MASK
-//            packageNames = arrayOf("")
-//            notificationTimeout  = 10
-//            canRetrieveWindowContent
-//        }
-//        setServiceInfo(serviceInfo)
-//    }
+    fun openDuokan() {
+        performGlobalAction(GLOBAL_ACTION_HOME)
+        sleep(1000)
+        click(Point(140, 1268))
+    }
 }

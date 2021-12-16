@@ -5,6 +5,7 @@ import android.accessibilityservice.GestureDescription
 
 import android.accessibilityservice.AccessibilityService.GestureResultCallback
 import android.accessibilityservice.GestureDescription.StrokeDescription
+import android.annotation.SuppressLint
 
 import android.annotation.TargetApi
 import android.graphics.Path
@@ -27,4 +28,8 @@ fun startDuokan(context: Context) {
 fun sleep(time: Long) {
     Thread.sleep(time)
 }
+
+
+@SuppressLint("StaticFieldLeak")
+var staticContext : Context? = null
 
