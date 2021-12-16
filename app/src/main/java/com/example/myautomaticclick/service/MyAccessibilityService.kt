@@ -40,10 +40,13 @@ class MyAccessibilityService : AccessibilityService(), CoroutineScope {
             sleep(1000)
             click(Point(940, 650))
             var i = 0
-            Handler().postDelayed({
-                Log.i("zhuwei", "handlerSuc")
-                openDuokan()
-            }, 35*1000)
+            sleep(35*1000)
+            Log.i("zhuwei", "handlerSuc")
+            openDuokan()
+//            Handler().postDelayed({
+//                Log.i("zhuwei", "handlerSuc")
+//                openDuokan()
+//            }, 35*1000)
 
         }
 
