@@ -30,32 +30,36 @@ class MyAccessibilityService : AccessibilityService(), CoroutineScope {
         Log.i("zhuwei", "AccessibilityEvent$event")
         val window = rootInActiveWindow
         Log.i("zhuwei", "window$window")
-        if (event?.eventType === AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED) {
-            //获取事件具体信息
-            val parcelable = event.parcelableData
-            //如果是下拉通知栏消息
-            if (parcelable is Notification) {
-            } else {
-                //其它通知信息，包括Toast
-                val toastMsg = event!!.text[0] as String
-                Log.d("zhuwei", "onAccessibilityEvent: $toastMsg")
-                if (toastMsg.contains("尽快")) {
-                    startActivity(Intent(this,MainActivity2::class.java))
-                    return
-                }
-            }
-        }
+//        if (event?.eventType === AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED) {
+//            //获取事件具体信息
+//            val parcelable = event.parcelableData
+//            //如果是下拉通知栏消息
+//            if (parcelable is Notification) {
+//            } else {
+//                //其它通知信息，包括Toast
+//                val toastMsg = event!!.text[0] as String
+//                Log.i("zhuwei", "onAccessibilityEvent: $toastMsg")
+//                if (toastMsg.contains("尽快")) {
+//                    startActivity(Intent(this, MainActivity2::class.java).apply {
+//                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//                    })
+//                    return
+//                }
+//            }
+//        }
         val titleNode =
-            rootInActiveWindow.findAccessibilityNodeInfosByViewId("com.duokan.reader:id/general__header_view__center_title")
-        if (titleNode != null && titleNode[0].text == "签到福利") {
+            rootInActiveWindow?.findAccessibilityNodeInfosByViewId("com.duokan.reader:id/general__header_view__center_title")
+        if (titleNode != null && titleNode.size > 0 && titleNode[0].text == "签到福利") {
             sleep(1000)
             click(Point(940, 650))
             sleep(1000)
             click(Point(940, 650))
 
-//            Handler().postDelayed({
-//
-//            }, 35000)
+            Handler().postDelayed({
+                startActivity(Intent(this, MainActivity2::class.java).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    })
+            }, 35000)
 
 //            val receivedNode = rootInActiveWindow.findAccessibilityNodeInfosByText("已领取")
 //            val acceptNode = rootInActiveWindow.findAccessibilityNodeInfosByText("收下")
@@ -128,9 +132,10 @@ class MyAccessibilityService : AccessibilityService(), CoroutineScope {
     override fun onCreate() {
         super.onCreate()
         Log.i("zhuwei", "onCreate")
-
         job = Job()
-        startActivity(Intent(this,MainActivity2::class.java))
+        startActivity(Intent(this, MainActivity2::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        })
     }
 
     override fun onDestroy() {
