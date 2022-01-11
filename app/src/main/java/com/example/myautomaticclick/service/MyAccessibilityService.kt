@@ -3,31 +3,15 @@ package com.example.myautomaticclick.service
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.GestureDescription
 import android.annotation.TargetApi
-import android.app.Notification
-import android.content.Intent
 import android.graphics.Path
 import android.graphics.Point
-import android.os.Handler
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.example.myautomaticclick.util.sleep
-import com.example.myautomaticclick.util.startDuokan
-import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
-import android.os.Parcelable
-import android.view.KeyEvent
-import com.example.myautomaticclick.MainActivity2
-import com.example.myautomaticclick.util.staticContext
 
 
-class MyAccessibilityService : AccessibilityService(), CoroutineScope {
-    private lateinit var job: Job
-
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
-
-
+class MyAccessibilityService : AccessibilityService() {
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         Log.i("zhuwei", "AccessibilityEvent$event")
         val window = rootInActiveWindow
@@ -40,14 +24,9 @@ class MyAccessibilityService : AccessibilityService(), CoroutineScope {
             sleep(1000+(-100..100).random())
             click(Point(940+(-10..10).random(), 650+(-10..10).random()))
             var i = 0
-            sleep(35*1000L+(-1000..1000).random()+(-100..100).random())
+            sleep(35*1000L+(-1000..1000).random())
             Log.i("zhuwei", "handlerSuc")
             openDuokan()
-//            Handler().postDelayed({
-//                Log.i("zhuwei", "handlerSuc")
-//                openDuokan()
-//            }, 35*1000)
-
         }
 
     }
@@ -96,23 +75,6 @@ class MyAccessibilityService : AccessibilityService(), CoroutineScope {
 
     override fun onInterrupt() {
         Log.i("zhuwei", "onInterrupt")
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        Log.i("zhuwei", "onCreate")
-
-        job = Job()
-        //staticContext?.let { startDuokan(it) }
-//        staticContext?.startActivity(Intent(staticContext, MainActivity2::class.java).apply {
-//            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//        })
-    }
-
-    override fun onDestroy() {
-        Log.i("zhuwei", "onDestroy")
-        job.cancel()
-        super.onDestroy()
     }
 
     private fun openDuokan() {
