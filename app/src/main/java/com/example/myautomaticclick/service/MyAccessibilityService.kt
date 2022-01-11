@@ -35,12 +35,12 @@ class MyAccessibilityService : AccessibilityService(), CoroutineScope {
         val titleNode =
             rootInActiveWindow?.findAccessibilityNodeInfosByViewId("com.duokan.reader:id/general__header_view__center_title")
         if (titleNode != null && titleNode.size > 0 && titleNode[0].text == "签到福利") {
-            sleep(1000)
-            click(Point(940, 650))
-            sleep(1000)
-            click(Point(940, 650))
+            sleep(1000+(-100..100).random())
+            click(Point(940+(-10..10).random(), 650+(-10..10).random()))
+            sleep(1000+(-100..100).random())
+            click(Point(940+(-10..10).random(), 650+(-10..10).random()))
             var i = 0
-            sleep(35*1000)
+            sleep(35*1000L+(-1000..1000).random()+(-100..100).random())
             Log.i("zhuwei", "handlerSuc")
             openDuokan()
 //            Handler().postDelayed({
@@ -115,9 +115,9 @@ class MyAccessibilityService : AccessibilityService(), CoroutineScope {
         super.onDestroy()
     }
 
-    fun openDuokan() {
+    private fun openDuokan() {
         performGlobalAction(GLOBAL_ACTION_HOME)
-        sleep(1000)
-        click(Point(140, 1268))
+        sleep(1000+(-100..100).random())
+        click(Point(140+(-10..10).random(), 1268+(-10..10).random()))
     }
 }

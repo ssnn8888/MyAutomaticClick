@@ -28,7 +28,9 @@ fun startDuokan(context: Context) {
 fun sleep(time: Long) {
     Thread.sleep(time)
 }
-
+fun sleep(time: Int) {
+    Thread.sleep(time.toLong())
+}
 
 @SuppressLint("StaticFieldLeak")
 var staticContext : Context? = null
